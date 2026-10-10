@@ -1,16 +1,23 @@
-const menuButton = document.getElementById('menuButton');
+const menuToggle = document.getElementById('menuToggle');
 const mainNav = document.getElementById('mainNav');
 
-menuButton.addEventListener('click', () => {
-  const isOpen = mainNav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(isOpen));
-});
-
-mainNav.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    mainNav.classList.remove('open');
-    menuButton.setAttribute('aria-expanded', 'false');
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'मेन्यू बंद करें' : 'मेन्यू खोलें');
+    menuToggle.textContent = isOpen ? '✕' : '☰';
   });
-});
 
-document.getElementById('year').textContent = new Date().getFullYear();
+  mainNav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'मेन्यू खोलें');
+      menuToggle.textContent = '☰';
+    });
+  });
+}
+
+const year = document.getElementById('year');
+if (year) year.textContent = new Date().getFullYear();
